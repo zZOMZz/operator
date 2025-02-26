@@ -1,0 +1,134 @@
+import { Button } from "./ui/button"
+import { Globe } from 'lucide-react';
+import { Lightbulb } from 'lucide-react';
+import { useState, useRef, useEffect } from "react";
+import { AudioLines } from 'lucide-react';
+
+interface ChatInputProps {
+  onSend: (message: string) => Promise<void>
+}
+
+const ChatInput: React.FC<ChatInputProps> = ({ onSend }) => {
+  const [isSearching, setIsSearching] = useState(false);
+  const [isInference, setIsInference] = useState(false);
+  const [isEmpty, setIsEmpty] = useState(true);
+
+  const inputRef = useRef<HTMLDivElement>(null);
+
+  const handleSearch = () => {
+    setIsSearching(!isSearching);
+  }
+
+  const handleInference = () => {
+    setIsInference(!isInference);
+  }
+
+
+  // 检测内容是否为空并更新占位符
+  const updatePlaceholder = () => {
+    const div = inputRef.current;
+    if (!div) return;
+    setIsEmpty(div.innerText.trim() === "")
+    if (div.innerText.trim() === "") {
+      setIsEmpty(true);
+      div.innerHTML =
+        '<p></p>';
+    } else {
+      setIsEmpty(false);
+    }
+  };
+
+  const handleInput = () => {
+    updatePlaceholder();
+  };
+
+  // 组件加载时初始化占位符
+  useEffect(() => {
+    updatePlaceholder();
+  }, []);
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      handleUpload();
+    }
+  };
+
+  const handleUpload = () => {
+    if (!inputRef.current) return;
+    const inputText = inputRef.current.innerText.trim();
+    onSend(inputText);
+  }
+
+  const focusInput = () => {
+    if (!inputRef.current) return;
+
+    const el = inputRef.current;
+
+    el.focus();
+
+    // 创建 range 让光标移动到末尾
+    const range = document.createRange();
+    const selection = window.getSelection();
+
+    if (selection) {
+      range.selectNodeContents(el);
+      range.collapse(false); // 光标放到最后
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
+  };
+
+
+  return (
+    <form
+      action=""
+      className="w-full bg-transparent flex justify-center"
+      onClick={focusInput}
+    >
+      <div className="relative flex z-[1] h-full max-w-[80%] flex-1 flex-col">
+        <div className="group relative z-[1] flex w-full items-center">
+          <div className="w-full">
+            <div
+              id="composer-background"
+              className="flex w-full cursor-text flex-col rounded-3xl border border-gray-300 px-3 py-1 transition-colors contain-inline-size shadow-[0_9px_9px_0px_rgba(0,0,0,0.01),_0_2px_5px_0px_rgba(0,0,0,0.06)] bg-white"
+            >
+              <div className="flex min-h-[44px] items-start pl-1">
+                <div className="min-w-0 max-w-full flex-1">
+                  <div className="max-h-52 overflow-auto">
+                    <div
+                      ref={inputRef}
+                      contentEditable="true"
+                      translate="no"
+                      id="prompt-textarea"
+                      className={`my-2 outline-offset-2 outline-0 outline-transparent break-words whitespace-break-spaces flex ProseMirror relative ${isEmpty ? "empty " : ""}`}
+                      onInput={handleInput}
+                      onKeyDown={handleKeyDown}
+                      data-placeholder="给 GPT 发送消息"
+                    >
+                    </div>
+                  </div>  
+                </div>
+              </div>
+              <div className="mb-2 mt-1 flex items-center justify-between sm:mt-5">
+                <div className="flex gap-x-1.5 cursor-pointer">
+                  <div className="">
+                    <Button type="button" className="rounded-full h-9 min-w-8" onClick={handleSearch} variant={isSearching ? "checked" : "default"}><Globe />搜索</Button>
+                  </div>
+                  <div>
+                    <Button type="button" className="rounded-full h-9 min-w-8" onClick={handleInference} variant={isInference ? "checked" : "default"}><Lightbulb />推理</Button>
+                  </div>
+                </div>
+                <div className="flex gap-x-1.5">
+                  <Button type="button" onClick={() => { handleUpload() }} className="flex size-9 items-center justify-center rounded-full transition-colors hover:opacity-70 bg-black text-white hover:bg-black" ><AudioLines /></Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  )
+}
+
+export default ChatInput
