@@ -74,7 +74,7 @@ export const ChatContent: React.FC<ChatContentProps> = ({ messages }) => {
 
       await getMessage({ setAction: handleThink, filename: 'trip_think.md', setIsEnd: handleThinkEnd })
 
-      await getMessage({ setAction: handleMessages, filename: 'test.md', setIsEnd:handleMessageEnd })
+      await getMessage({ setAction: handleMessages, filename: 'trip(2).md', setIsEnd:handleMessageEnd })
     }
 
     fetchData()

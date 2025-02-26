@@ -7,27 +7,11 @@ module.exports = {
         'slide-in': 'sliceIn 0.5s forwards',
         'slide-out': 'slideOut 0.5s forwards',
       },
-      keyframes: {
-        slideIn: {
-          '0%': {
-            opacity: '0',
-            transform: 'translateY(30px)',
-          },
-          '100%': {
-            opacity: '1',
-            transform: 'translateY(0)',
-          },
-        },
-        slideOut: {
-          '0%': {
-            opacity: '1',
-            transform: 'translateY(0)',
-          },
-          '100%': {
-            opacity: '0',
-            transform: 'translateY(-30px)',
-          },
-        },
+      colors: {
+        "input-border": "hsl(222 0% 86% / 38%)"
+      },
+      borderColor: {
+        "input-border": "hsl(222 0% 86% / 38%)"
       }
     },
   },
