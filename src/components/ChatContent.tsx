@@ -196,18 +196,10 @@ export const ChatContent: React.FC<ChatContentProps> = ({ messages }) => {
                         <div className="w-full relative break-words text-black text-opacity-90 dark:text-white dark:text-opacity-90">
                           <div className="markdown prose max-w-none break-words dark:prose-invert light">
                             <div className={`pl-4 md:pl-7 relative transition-all `}>
-                              <div className="absolute bottom-4 left-0 top-2 w-1 rounded-full bg-black/10 h-full"></div>
+                              {/* <div className="absolute bottom-4 left-0 top-2 w-1 rounded-full bg-black/10 h-full"></div> */}
                               <AnimatePresence mode="wait">
                                 {showBuThink && (
-                                  <motion.div
-                                    initial={{ maxHeight: 0, opacity: 0 }}
-                                    animate={{ maxHeight: 500, opacity: 1 }}
-                                    exit={{ maxHeight: 0, opacity: 0 }}
-                                    transition={{ duration: 0.5, ease: "easeInOut"}}
-                                    className="overflow-auto"
-                                  >
                                     <BuThinkContent buThinkContent={buThinkContent} />
-                                  </motion.div>
                                 )}
                               </AnimatePresence>
                             </div>

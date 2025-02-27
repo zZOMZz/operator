@@ -124,3 +124,55 @@ export const getMdxMessage = async ({ setAction, filename }: getMessageProps) =>
     await new Promise(resolve => setTimeout(resolve, 3000))
   }
 }
+
+interface getStepsProps {
+  setSteps: (value: Step[]) => void;
+  setIsEnd: (value: boolean) => void;
+}
+
+interface Step {
+  text: string;
+  isDone: boolean;
+}
+
+const steps = [
+  { text: "分析航班价格", isDone: false },
+  { text: "调整搜索策略", isDone: false },
+  { text: "评估航班成本", isDone: false },
+  { text: "规划景点行程", isDone: false },
+  { text: "优化行程安排", isDone: false },
+  { text: "细化行程安排", isDone: false },
+  { text: "调整行程细节", isDone: false },
+  { text: "确定行程成本", isDone: false },
+  { text: "优化酒店选择", isDone: false },
+  { text: "完善行程细节", isDone: false },
+  { text: "优化每日活动", isDone: false }
+];
+
+export const getSteps = async ({ setSteps, setIsEnd }: getStepsProps) => {
+  let index = 1;
+  let done = false;
+  let content: Step[] = [{ text: "Thinking", isDone: true }, { text: "规划旅行指南", isDone: false }]
+  setSteps(content)
+
+  while (!done) {
+    content = [...content, steps[index]]
+
+    await new Promise(resolve => {
+      setTimeout(() => {
+        content[index].isDone = true
+        setSteps(content)
+        resolve(null)
+      }, 2000)
+    })
+
+    index += 1;
+    done = index >= steps.length
+  }
+
+  setTimeout(() => {
+    content[index].isDone = true
+    setSteps(content)
+  }, 1000)
+  setIsEnd(true)
+} 

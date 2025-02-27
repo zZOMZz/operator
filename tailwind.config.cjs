@@ -12,7 +12,10 @@ module.exports = {
       },
       borderColor: {
         "input-border": "hsl(222 0% 86% / 38%)"
-      }
+      },
+      backgroundImage: {
+        'custom-gradient': 'linear-gradient(to bottom, hsl(40 18% 97%), hsla(0, 0%, 100%, 0))',
+      },
     },
   },
   plugins: [],

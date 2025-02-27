@@ -2,7 +2,7 @@ import { Button } from "./ui/button"
 import { Globe } from 'lucide-react';
 import { Lightbulb } from 'lucide-react';
 import { useState, useRef, useEffect } from "react";
-import { AudioLines } from 'lucide-react';
+import { AudioLines, ArrowUp } from 'lucide-react';
 
 interface ChatInputProps {
   onSend: (message: string) => Promise<void>
@@ -91,11 +91,11 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSend }) => {
           <div className="w-full">
             <div
               id="composer-background"
-              className="flex w-full cursor-text flex-col rounded-3xl border border-gray-300 px-3 py-1 transition-colors contain-inline-size shadow-[0_9px_9px_0px_rgba(0,0,0,0.01),_0_2px_5px_0px_rgba(0,0,0,0.06)] bg-white"
+              className="flex w-full cursor-text flex-col rounded-3xl border border-gray-300 p-4 transition-colors contain-inline-size shadow-[0_9px_9px_0px_rgba(0,0,0,0.01),_0_2px_5px_0px_rgba(0,0,0,0.06)] bg-white"
             >
               <div className="flex min-h-[44px] items-start pl-1">
                 <div className="min-w-0 max-w-full flex-1">
-                  <div className="max-h-52 overflow-auto">
+                  <div className="max-h-52 overflow-auto w-[90%]">
                     <div
                       ref={inputRef}
                       contentEditable="true"
@@ -107,22 +107,15 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSend }) => {
                       data-placeholder="给 GPT 发送消息"
                     >
                     </div>
-                  </div>  
-                </div>
-              </div>
-              <div className="mb-2 mt-1 flex items-center justify-between sm:mt-5">
-                <div className="flex gap-x-1.5 cursor-pointer">
-                  <div className="">
-                    <Button type="button" className="rounded-full h-9 min-w-8" onClick={handleSearch} variant={isSearching ? "checked" : "default"}><Globe />搜索</Button>
                   </div>
-                  <div>
-                    <Button type="button" className="rounded-full h-9 min-w-8" onClick={handleInference} variant={isInference ? "checked" : "default"}><Lightbulb />推理</Button>
+                  <div className="flex gap-x-1.5 absolute bottom-4 right-4">
+                    <Button type="button" onClick={() => { handleUpload() }} className="flex size-9 items-center justify-center rounded-full transition-colors hover:opacity-70 bg-black text-white hover:bg-black" >
+                      <ArrowUp />
+                    </Button>
                   </div>
                 </div>
-                <div className="flex gap-x-1.5">
-                  <Button type="button" onClick={() => { handleUpload() }} className="flex size-9 items-center justify-center rounded-full transition-colors hover:opacity-70 bg-black text-white hover:bg-black" ><AudioLines /></Button>
-                </div>
               </div>
+             
             </div>
           </div>
         </div>
