@@ -3,13 +3,15 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import rehypeReact from 'rehype-react';
-import TicketCard from "./cards/ticket";
-import { getMessage, getMarkdownStream, getMdxMessage } from "@/service/chat";
+// import TicketCard from "./cards/ticket";
+import { TicketCard, HotelComparisonCard } from "@/components/cards";
+import { getMessage, getMarkdownStream, getMdxMessage, getSteps } from "@/service/chat";
 import s from './index.module.scss'
 import React from "react";
 import { ChevronDown } from 'lucide-react'
 import { motion, AnimatePresence } from "motion/react";
 import BuThinkContent from "./BuThinkContent";
+
 
 
 export interface Message {
@@ -21,6 +23,13 @@ export interface Message {
 interface ChatContentProps {
   messages: Message[]
 }
+
+interface Step {
+  text: string;
+  isDone: boolean;
+}
+
+const tagesName = ['hotelcard', 'ticketcard', 'code']
 
 export const ChatContent: React.FC<ChatContentProps> = ({ messages }) => {
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -44,6 +53,8 @@ export const ChatContent: React.FC<ChatContentProps> = ({ messages }) => {
   const thinkRef = useRef<HTMLDivElement>(null)
   const [thinkHeight, setThinkHeight] = useState<number>(0)
 
+  const [steps, setSteps] = useState<Step[]>([]);
+  const [isButinkEnd, setIsEnd] = useState(false);
 
   useEffect(() => {
     scrollToView()
@@ -63,14 +74,16 @@ export const ChatContent: React.FC<ChatContentProps> = ({ messages }) => {
   useEffect(() => {
     const fetchData = async () => {
 
-      await getMarkdownStream(
-        {
-          setAction: handleBuThink,
-          filename: 'bu_think.md',
-          setIsEnd: handleBuThinkEnd,
-          setContent: handleBuThinkContent
-        }
-      )
+      // await getMarkdownStream(
+      //   {
+      //     setAction: handleBuThink,
+      //     filename: 'bu_think.md',
+      //     setIsEnd: handleBuThinkEnd,
+      //     setContent: handleBuThinkContent
+      //   }
+      // )
+
+      await getSteps({ setSteps, setIsEnd });
 
       await getMessage({ setAction: handleThink, filename: 'trip_think.md', setIsEnd: handleThinkEnd })
 
@@ -82,12 +95,13 @@ export const ChatContent: React.FC<ChatContentProps> = ({ messages }) => {
 
   const handleMessages = (msg: string) => {
     setMdxContent(msg)
-    // scrollToView()
+    scrollToView()
   }
 
   const components = {
     img: (props: any) => <img style={{ borderRadius: '8px' }} {...props} />,
     ticketcard: () => <TicketCard />,
+    hotelcard: () => <HotelComparisonCard />,
     code: ({ node, inline, className, children, ...props }: any) => {
       return (
         <span
@@ -101,7 +115,7 @@ export const ChatContent: React.FC<ChatContentProps> = ({ messages }) => {
     p: ({ node, children }: any) => {
       if (
         node.children.length === 1 &&
-        node.children[0].tagName === "code"
+        tagesName.includes(node.children[0].tagName)
       ) {
         return <>{children}</>;
       }
@@ -128,7 +142,7 @@ export const ChatContent: React.FC<ChatContentProps> = ({ messages }) => {
 
   const handleThink = (msg: string) => {
     setThink(msg)
-    // scrollToView()
+    scrollToView()
   }
 
   const handleThinkEnd = () => {
@@ -141,7 +155,7 @@ export const ChatContent: React.FC<ChatContentProps> = ({ messages }) => {
   }
 
   return (
-    <div className="flex-1 overflow-y-auto scrollbar-transparent scrollbar-custom flex items-center flex-col">
+    <div className="flex-1 w-full overflow-y-auto scrollbar-transparent scrollbar-custom flex items-center flex-col">
       {messages.map((msg) => (
         <div className="w-[80%]">
           <div className="m-auto text-base py-[18px] px-6">
@@ -150,7 +164,7 @@ export const ChatContent: React.FC<ChatContentProps> = ({ messages }) => {
                 {
                   msg.role === 'assistant' ? (
                     <div className="flex max-w-full flex-col">
-                      <span className="block first:mt-0 relative my-1.5">
+                      {/* <span className="block first:mt-0 relative my-1.5">
                         <button style={{ opacity: 1 }}>
                           <div className="flex items-center justify-start gap-1">
                             <AnimatePresence mode="wait">
@@ -184,24 +198,13 @@ export const ChatContent: React.FC<ChatContentProps> = ({ messages }) => {
                             </AnimatePresence>
                           </div>
                         </button>
-                      </span>
-                      <div className="overflow-hidden" style={{}}>
-                        <div className="mb-4 border-l-2 pl-4">
-                          <div className="not-prose leading-6 markdown prose w-full break-words">
-                            {msg.detection}
-                          </div>
-                        </div>
-                      </div>
+                      </span> */}
+                      
                       <div className="relative order-2 flex w-full flex-col items-start">
                         <div className="w-full relative break-words text-black text-opacity-90 dark:text-white dark:text-opacity-90">
                           <div className="markdown prose max-w-none break-words dark:prose-invert light">
-                            <div className={`pl-4 md:pl-7 relative transition-all `}>
-                              {/* <div className="absolute bottom-4 left-0 top-2 w-1 rounded-full bg-black/10 h-full"></div> */}
-                              <AnimatePresence mode="wait">
-                                {showBuThink && (
-                                    <BuThinkContent buThinkContent={buThinkContent} />
-                                )}
-                              </AnimatePresence>
+                            <div className={`pl-4 md:pl-7 relative transition-all mb-8 `}>
+                              <BuThinkContent buThinkContent={buThinkContent} steps={steps} isEnd={isButinkEnd} />
                             </div>
                             {/* 3. think输出内容 */}
                             <AnimatePresence>
@@ -242,7 +245,8 @@ export const ChatContent: React.FC<ChatContentProps> = ({ messages }) => {
                               children={mdxContent}
                               components={components}
                               remarkPlugins={[remarkGfm]}
-                              rehypePlugins={[rehypeRaw,rehypeReact]}
+                              rehypePlugins={[rehypeRaw, rehypeReact]}
+                              className={`pt-8 relative transition-all `}
                             />
                           </div>
                         </div>

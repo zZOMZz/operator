@@ -1,27 +1,17 @@
 import { Button } from "./ui/button"
-import { Globe } from 'lucide-react';
-import { Lightbulb } from 'lucide-react';
 import { useState, useRef, useEffect } from "react";
-import { AudioLines, ArrowUp } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 
 interface ChatInputProps {
   onSend: (message: string) => Promise<void>
 }
 
 const ChatInput: React.FC<ChatInputProps> = ({ onSend }) => {
-  const [isSearching, setIsSearching] = useState(false);
-  const [isInference, setIsInference] = useState(false);
   const [isEmpty, setIsEmpty] = useState(true);
 
   const inputRef = useRef<HTMLDivElement>(null);
 
-  const handleSearch = () => {
-    setIsSearching(!isSearching);
-  }
-
-  const handleInference = () => {
-    setIsInference(!isInference);
-  }
+  
 
 
   // 检测内容是否为空并更新占位符
@@ -58,6 +48,8 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSend }) => {
     if (!inputRef.current) return;
     const inputText = inputRef.current.innerText.trim();
     onSend(inputText);
+    inputRef.current.innerHTML = "";
+    updatePlaceholder();
   }
 
   const focusInput = () => {
@@ -91,7 +83,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSend }) => {
           <div className="w-full">
             <div
               id="composer-background"
-              className="flex w-full cursor-text flex-col rounded-3xl border border-gray-300 p-4 transition-colors contain-inline-size shadow-[0_9px_9px_0px_rgba(0,0,0,0.01),_0_2px_5px_0px_rgba(0,0,0,0.06)] bg-white"
+              className="flex w-full cursor-text flex-col rounded-3xl border border-gray-300 p-4 transition-colors contain-inline-size shadow-[0_9px_9px_0px_rgba(0,0,0,0.01),_0_2px_5px_0px_rgba(0,0,0,0.06)] bg-white pb-9"
             >
               <div className="flex min-h-[44px] items-start pl-1">
                 <div className="min-w-0 max-w-full flex-1">

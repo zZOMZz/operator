@@ -2,6 +2,8 @@
 
 由于我无法实时访问互联网获取最新机票数据，以下为基于历史价格和示例结构的模拟分析。实际预订前请通过平台核实最新信息。
 
+<ticketcard></ticketcard>
+
 | 航班号 | 航空公司 | 起降时间（北京↔曼谷） | 总价（往返） | 飞行时长 | 机型 | 平台价格对比（示例） | 推荐理由与优势 | 缺点与注意事项 |
 |--------|----------|-------------------------|--------------|----------|------|-----------------------|----------------|------------------|
 | CA1549 | 中国国航 | 去程16:30-18:45<br>返程17:30-20:00 | ¥1,280+¥555=¥1,835 | 去程5h15m<br>返程5h30m | 空客330 | 携程¥1,835<br>Trip.com¥1,790 | 性价比最高<br>往返均为黄金时段，机型宽敞<br>Trip.com平台返程特价 | 返程落地较晚（20:00） |
@@ -187,6 +189,8 @@
 
 # 模拟推荐酒店对比
 
+<hotelcard></hotelcard>
+
 | 酒店名称 | 曼谷素坤逸万豪酒店 | 中心点酒店大京都大厦 | 曼谷亚洲酒店 |
 |----------|---------------------|---------------------|-------------|
 | 价格范围（5晚总价） | ¥8,000-10,000 | ¥4,500-6,000 | ¥2,500-3,500 |
@@ -196,7 +200,7 @@
 | 设施亮点 | 无边泳池、行政酒廊 | 高空酒吧、无边泳池 | 基础泳池、免费早餐 |
 | 客户评价 | 9.2/10（服务优质） | 8.8/10（景观一流） | 7.5/10（设施较旧） |
 | 优缺点 | 优：奢华体验、位置核心；缺：价格高 | 优：性价比高、高空景观；缺：房间略小 | 优：低价、交通便利；缺：设施陈旧 |
-| URL | [查看详情](https://hotels.ctrip.com/hotels/detail/?hotelId=1706936&checkIn=2025-03-01&checkOut=2025-03-06&cityId=359&minprice=&mincurr=&adult=1&children=0&ages=&crn=1&curr=&fgt=&stand=&stdcode=&hpaopts=&mproom=&ouid=&shoppingid=&roomkey=&highprice=-1&lowprice=0&showtotalamt=&hotelUniqueKey=&intl=1&listfilter=1){:target="_blank"} | [查看详情](https://hotels.ctrip.com/hotels/detail/?hotelId=701061&checkIn=2025-03-01&checkOut=2025-03-06&cityId=359&minprice=&mincurr=&adult=1&children=0&ages=&crn=1&curr=&fgt=&stand=&stdcode=&hpaopts=&mproom=&ouid=&shoppingid=&roomkey=&highprice=-1&lowprice=0&showtotalamt=&hotelUniqueKey=&intl=1&listfilter=1){:target="_blank"} | [查看详情](https://hotels.ctrip.com/hotels/detail/?hotelId=995970&checkIn=2025-03-01&checkOut=2025-03-06&cityId=359&minprice=&mincurr=&adult=1&children=0&ages=&crn=1&curr=&fgt=&stand=&stdcode=&hpaopts=&mproom=&ouid=&shoppingid=&roomkey=&highprice=-1&lowprice=0&showtotalamt=&hotelUniqueKey=&intl=1&listfilter=1){:target="_blank"} |
+| URL | [查看详情](https://hotels.ctrip.com/hotels/detail/?hotelId=1706936&checkIn=2025-03-01&checkOut=2025-03-06&cityId=359&minprice=&mincurr=&adult=1&children=0&ages=&crn=1&curr=&fgt=&stand=&stdcode=&hpaopts=&mproom=&ouid=&shoppingid=&roomkey=&highprice=-1&lowprice=0&showtotalamt=&hotelUniqueKey=&intl=1&listfilter=1) | [查看详情](https://hotels.ctrip.com/hotels/detail/?hotelId=701061&checkIn=2025-03-01&checkOut=2025-03-06&cityId=359&minprice=&mincurr=&adult=1&children=0&ages=&crn=1&curr=&fgt=&stand=&stdcode=&hpaopts=&mproom=&ouid=&shoppingid=&roomkey=&highprice=-1&lowprice=0&showtotalamt=&hotelUniqueKey=&intl=1&listfilter=1) | [查看详情](https://hotels.ctrip.com/hotels/detail/?hotelId=995970&checkIn=2025-03-01&checkOut=2025-03-06&cityId=359&minprice=&mincurr=&adult=1&children=0&ages=&crn=1&curr=&fgt=&stand=&stdcode=&hpaopts=&mproom=&ouid=&shoppingid=&roomkey=&highprice=-1&lowprice=0&showtotalamt=&hotelUniqueKey=&intl=1&listfilter=1) |
 
 ## 详细分析与推荐
 

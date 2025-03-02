@@ -8,15 +8,21 @@ interface Step {
   isDone: boolean;
 }
 
-const MarkdownContent = ({ buThinkContent }: { buThinkContent: string }) => {
+interface MarkdownContentProps {
+  buThinkContent: string;
+  steps: Step[];
+  isEnd: boolean;
+}
 
-  const [steps, setSteps] = useState<Step[]>([]);
+const MarkdownContent: React.FC<MarkdownContentProps> = ({ buThinkContent, steps }) => {
+
+  // const [steps, setSteps] = useState<Step[]>([]);
   const [isEnd, setIsEnd] = useState(false);
   const stepsEndRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    getSteps({ setSteps, setIsEnd });
-  }, [])
+  // useEffect(() => {
+  //   getSteps({ setSteps, setIsEnd });
+  // }, [])
 
   useEffect(() => {
     if (stepsEndRef.current) {
@@ -29,10 +35,8 @@ const MarkdownContent = ({ buThinkContent }: { buThinkContent: string }) => {
       className="relative border-2  border-[hsl(222,0%,86%,0.38)] rounded-2xl overflow-clip transition-[height_1000ms,width_1000ms] mb-4 md:-mx-4 h-[500px] "
     >
       <div className="absolute text-secondary w-full h-full overflow-y-clip flex">
-        {/* 左边侧边栏 */}
-        <div className="relative flex flex-col w-2/5 h-full overflow-auto bg-[hsl(40_18%_97%)]">
-          {/* title */}
-          <div className="pt-4 pb-2 relative overflow-visible">
+        <div className="sidebar relative flex flex-col w-2/5 h-full overflow-auto bg-[hsl(40_18%_97%)]">
+          <div className="title pt-4 pb-2 relative overflow-visible">
             <div className="flex flex-col items-start gap-0 text-base space-x-0 z-30 duration-200 focus:outline-none focus-within:outline-none">
               <div className="flex h-full px-4 items-center justify-start text-primary">
                 <div className="flex gap-1 items-center overflow-hidden">
@@ -46,7 +50,6 @@ const MarkdownContent = ({ buThinkContent }: { buThinkContent: string }) => {
             </div>
             <div className="absolute left-0 top-[100%] w-full h-5 bg-custom-gradient z-50 from-background"></div>
           </div>
-          {/* { scroll-gutter-stable no-scrollbar } */}
           <div
             className="w-full h-full overflow-y-auto overflow-x-hidden scroll-gutter-stable no-scrollbar"
             style={{ scrollbarWidth: "none", scrollbarGutter: "stable both-edges" }}
@@ -64,7 +67,7 @@ const MarkdownContent = ({ buThinkContent }: { buThinkContent: string }) => {
                               item.isDone ? (
                                 <CircleCheckBig size={21} className="text-primary opacity-60 group-hover/header:opacity-100" />
                               ) : (
-                                  <LoaderCircle size={21} className="text-primary opacity-60 group-hover/header:opacity-100 animate-spin" />
+                                <LoaderCircle size={21} className="text-primary opacity-60 group-hover/header:opacity-100 animate-spin" />
                               )
                             }
                           </div>
@@ -87,12 +90,12 @@ const MarkdownContent = ({ buThinkContent }: { buThinkContent: string }) => {
           <div className="pt-3 pb-2 px-3 relative overflow-visible">
             <div className="flex items-center justify-start">
               <div className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium leading-[normal] cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:opacity-50 disabled:cursor-default [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:-mx-0.5 text-primary hover:bg-button-ghost-hover h-8 w-8 rounded-full opacity-20 hover:opacity-100">
-                <Maximize2 size={18} className="" />
+                <Maximize2 size={18}/>
               </div>
             </div>
           </div>
         </div>
-        {/* 右侧内容 */}
+        {/* 右侧内容 operator */}
         <div className="gap-3 relative min-h-full w-full h-full">
 
         </div>
