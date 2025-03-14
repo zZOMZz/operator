@@ -1,7 +1,5 @@
-import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { useEffect, useRef } from "react";
 import { Search, CircleCheckBig, Maximize2, LoaderCircle } from 'lucide-react';
-import { getSteps } from "../service/chat";
 
 interface Step {
   text: string;
@@ -9,20 +7,13 @@ interface Step {
 }
 
 interface MarkdownContentProps {
-  buThinkContent: string;
   steps: Step[];
+  buThinkContent: string;
   isEnd: boolean;
 }
 
-const MarkdownContent: React.FC<MarkdownContentProps> = ({ buThinkContent, steps }) => {
-
-  // const [steps, setSteps] = useState<Step[]>([]);
-  const [isEnd, setIsEnd] = useState(false);
+const MarkdownContent: React.FC<MarkdownContentProps> = ({ steps }) => {
   const stepsEndRef = useRef<HTMLDivElement>(null);
-
-  // useEffect(() => {
-  //   getSteps({ setSteps, setIsEnd });
-  // }, [])
 
   useEffect(() => {
     if (stepsEndRef.current) {

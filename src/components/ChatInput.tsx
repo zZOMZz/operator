@@ -10,10 +10,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSend }) => {
   const [isEmpty, setIsEmpty] = useState(true);
 
   const inputRef = useRef<HTMLDivElement>(null);
-
   
-
-
   // 检测内容是否为空并更新占位符
   const updatePlaceholder = () => {
     const div = inputRef.current;
